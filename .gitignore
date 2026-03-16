@@ -8,6 +8,13 @@
 .externalNativeBuild
 .cxx
 
+# Signing keys
+*.jks
+*.keystore
+*.p12
+key.properties
+cassie_key
+
 # Claude
 .claude/
 
