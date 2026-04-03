@@ -22,7 +22,7 @@ import com.lagradost.quicknovel.mvvm.logError
 import com.lagradost.quicknovel.ui.UiText
 
 object TTSNotifications {
-    private const val TTS_CHANNEL_ID = "QuickNovelTTS"
+    private const val TTS_CHANNEL_ID = "cassie.tts"
     const val TTS_NOTIFICATION_ID = 133742
 
     private var hasCreateedNotificationChannel = false

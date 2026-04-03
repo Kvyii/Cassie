@@ -266,7 +266,7 @@ object BookDownloader2Helper {
             return false
         }
 
-        val relativePath = (Environment.DIRECTORY_DOWNLOADS + "${fs}Epub${fs}")
+        val relativePath = (Environment.DIRECTORY_DOWNLOADS + "${fs}Cassie${fs}")
         val displayName = "${sanitizeFilename(name)}.epub"
 
         if (isScopedStorage()) {
@@ -568,7 +568,7 @@ object BookDownloader2Helper {
 
         val externalReader = settingsManager.getBoolean(
             activity.getString(R.string.external_reader_key),
-            true
+            false
         )
         if (openInApp ?: !externalReader) {
             val myIntent = Intent(activity, ReadActivity2::class.java)
@@ -606,7 +606,7 @@ object BookDownloader2Helper {
 
         val externalReader = settingsManager.getBoolean(
             getString(R.string.external_reader_key),
-            true
+            false
         )
         val authorsNotes = getKey<Boolean>(EPUB_AUTHOR_NOTES) ?: true
 
@@ -804,8 +804,8 @@ object BookDownloader2Helper {
 }
 
 object NotificationHelper {
-    const val CHANNEL_ID = "epubdownloader.general"
-    const val CHANNEL_NAME = "Downloads"
+    const val CHANNEL_ID = "cassie.download"
+    const val CHANNEL_NAME = "Cassie Downloads"
     const val CHANNEL_DESCRIPT = "The download notification channel"
     private var hasCreatedNotChanel = false
 

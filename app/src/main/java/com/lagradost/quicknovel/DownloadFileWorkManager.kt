@@ -26,9 +26,9 @@ class DownloadFileWorkManager(val context: Context, private val workerParams: Wo
         const val DATA = "data"
         const val ID = "id"
 
-        const val ID_REFRESH_DOWNLOADS = "REFRESH_DOWNLOADS"
-        const val ID_REFRESH_READINGPROGRESS = "REFRESH_READINGPROGRESS"
-        const val ID_DOWNLOAD = "ID_DOWNLOAD"
+        const val ID_REFRESH_DOWNLOADS = "CASSIE_REFRESH_DOWNLOADS"
+        const val ID_REFRESH_READINGPROGRESS = "CASSIE_REFRESH_READINGPROGRESS"
+        const val ID_DOWNLOAD = "CASSIE_ID_DOWNLOAD"
 
 
         private var _viewModel: WeakReference<DownloadViewModel> = WeakReference(null)
