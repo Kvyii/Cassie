@@ -192,6 +192,10 @@
     <string name="remove_history">Remove History</string>
     <string name="search_providers">Search Providers</string>
     <string name="no_more_chapters">No more chapters</string>
+    <string name="mark_as_read">Mark as read</string>
+    <string name="mark_as_unread">Mark as unread</string>
+    <string name="mark_previous_as_read">Mark previous as read</string>
+    <string name="mark_previous_as_unread">Mark previous as unread</string>
     <string name="paused">Paused</string>
     <string name="stopped">Stopped</string>
     <string name="stop">Stop</string>

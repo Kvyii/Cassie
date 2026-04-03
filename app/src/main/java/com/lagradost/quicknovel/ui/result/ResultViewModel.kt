@@ -187,6 +187,15 @@ class ResultViewModel : ViewModel() {
         return true
     }
 
+    fun setReadUpToChapter(chapter: ChapterData, value: Boolean) {
+        val streamResponse = (load as? StreamResponse) ?: return
+        val targetIndex = chapterIndex(chapter) ?: return
+        for (i in 0..targetIndex) {
+            val ch = streamResponse.data[i]
+            setReadChapter(ch, value)
+        }
+    }
+
     var repo: APIRepository? = null
 
     var isGetLoaded = false
