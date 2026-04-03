@@ -4,11 +4,13 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isGone
 import com.lagradost.quicknovel.ChapterData
+import com.lagradost.quicknovel.R
 import com.lagradost.quicknovel.databinding.SimpleChapterBinding
 import com.lagradost.quicknovel.ui.BaseDiffCallback
 import com.lagradost.quicknovel.ui.NoStateAdapter
 import com.lagradost.quicknovel.ui.ViewHolderState
 import com.lagradost.quicknovel.ui.newSharedPool
+import com.lagradost.quicknovel.util.UIHelper.popupMenu
 
 class ChapterAdapter(val viewModel: ResultViewModel) :
     NoStateAdapter<ChapterData>(
@@ -55,9 +57,29 @@ class ChapterAdapter(val viewModel: ResultViewModel) :
                 viewModel.streamRead(item)
                 viewModel.isResume = true//to update read status
             }
-            root.setOnLongClickListener {
-                viewModel.setReadChapter(chapter = item, !viewModel.hasReadChapter(item))
-                refresh(binding, item, viewModel)
+            root.setOnLongClickListener { view ->
+                val isRead = viewModel.hasReadChapter(item)
+                val items = listOf(
+                    1 to if (isRead) R.string.mark_as_unread else R.string.mark_as_read,
+                    2 to R.string.mark_previous_as_read,
+                    3 to R.string.mark_previous_as_unread,
+                )
+                view.popupMenu(items, null) {
+                    when (itemId) {
+                        1 -> {
+                            viewModel.setReadChapter(chapter = item, !isRead)
+                            refresh(binding, item, viewModel)
+                        }
+                        2 -> {
+                            viewModel.setReadUpToChapter(item, true)
+                            notifyDataSetChanged()
+                        }
+                        3 -> {
+                            viewModel.setReadUpToChapter(item, false)
+                            notifyDataSetChanged()
+                        }
+                    }
+                }
                 return@setOnLongClickListener true
             }
             refresh(binding, item, viewModel)
