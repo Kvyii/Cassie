@@ -10,7 +10,7 @@ import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.lagradost.quicknovel.mvvm.logError
 import androidx.core.content.edit
 
-const val PREFERENCES_NAME: String = "rebuild_preference"
+const val PREFERENCES_NAME: String = "cassie_preference"
 const val DOWNLOAD_FOLDER: String = "downloads_data"
 const val DOWNLOAD_SIZE: String = "downloads_size"
 const val DOWNLOAD_TOTAL: String = "downloads_total"

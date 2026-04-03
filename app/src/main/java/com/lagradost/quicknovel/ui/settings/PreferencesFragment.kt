@@ -119,7 +119,7 @@ class PreferencesFragment : PreferenceFragmentCompat() {
             // See https://www.py4u.net/discuss/614761
             return SafeFile.fromMedia(
                 context, MediaFileContentType.Downloads
-            )?.gotoDirectory("Epub")
+            )?.gotoDirectory("Cassie")
         }
 
         /**
