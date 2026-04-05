@@ -668,7 +668,8 @@ object BookDownloader2Helper {
                     }
                     return@withContext true
                 } else {
-                    delay(5000) // ERROR
+                    // exponential backoff: 5s, 10s, 20s, 30s, 30s
+                    delay(minOf(30_000L, 5000L * (1L shl i)))
                     if (api.rateLimitTime > 0) {
                         delay(api.rateLimitTime)
                     }
@@ -1509,6 +1510,8 @@ object BookDownloader2 {
             if (currentDownloads.contains(card.id)) {
                 return
             }
+            // register early so pause/resume actions can be queued immediately
+            currentDownloads += card.id
         }
 
         // set pending before download
@@ -1572,6 +1575,12 @@ object BookDownloader2 {
             }
         } catch (t: Throwable) {
             logError(t)
+        } finally {
+            // clean up early registration if we never reached setPrefixData
+            // (setPrefixData's inner downloadWorkThread will handle its own cleanup)
+            currentDownloadsMutex.withLock {
+                currentDownloads -= card.id
+            }
         }
     }
 
@@ -1627,11 +1636,8 @@ object BookDownloader2 {
     ) {
         val id = generateId(load, apiName)
 
-        // cant download the same thing twice at the same time
+        // register in currentDownloads (may already be registered from early registration)
         currentDownloadsMutex.withLock {
-            if (currentDownloads.contains(id)) {
-                return
-            }
             currentDownloads += id
         }
         val prevDownloadData =
@@ -2488,9 +2494,8 @@ object BookDownloader2 {
 
                 if (hasDownloadedChapter) {
                     downloadedTotal += 1
-                } else {
-                    currentState = DownloadState.IsFailed
                 }
+                // skip failed chapters instead of stopping the entire download
 
                 val processedItems = index - range.start +
                         if (hasDownloadedChapter) {
@@ -2514,22 +2519,6 @@ object BookDownloader2 {
 
                 when (currentState) {
                     DownloadState.IsStopped -> return
-                    DownloadState.IsFailed -> {
-                        // we are only interested in a notification if we failed
-                        changeDownload(id) {
-                            this.progress = index.toLong() + 1L
-                            this.downloaded = processedItems.toLong() + alreadyDownloaded
-                            state = currentState
-                        }?.let { newProgressState ->
-                            createNotification(
-                                id,
-                                load,
-                                newProgressState,
-                            )
-                        }
-                        return
-                    }
-
                     else -> {}
                 }
             }

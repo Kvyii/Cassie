@@ -649,6 +649,6 @@ class DownloadViewModel : ViewModel() {
 
     @Suppress("UNUSED_PARAMETER")
     private fun downloadDataRefreshed(_id: Int) = viewModelScope.launchSafe {
-        fetchAllData(true)
+        loadAllData(true)
     }
 }
