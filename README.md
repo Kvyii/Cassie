@@ -8,6 +8,8 @@ A fork of [QuickNovel](https://github.com/LagradOst/QuickNovel) with an integrat
 - Explanation history viewable from the reader toolbar
 - Markdown rendering in responses (including tables)
 
+- Note: Select a model with fast token output. Gemini 3 Flash strongly recommended for cost and speed reasons. 
+
 **Download:** https://github.com/Kvyii/Cassie/releases
 
 <img width="1577" height="1082" alt="cassie" src="https://github.com/user-attachments/assets/68e4dad9-df11-49e6-837a-b737c18b7a50" />
